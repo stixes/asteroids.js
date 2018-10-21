@@ -12,7 +12,7 @@ class Ship extends PhysObject {
     var s = 15;
     stroke(255);
     noFill();
-    push();
+    push();s
     translate(this.pos.x,this.pos.y);
     rotate(this.dir);
     triangle(-s,s,-s,-s,s,0);
@@ -28,6 +28,9 @@ class Ship extends PhysObject {
 
   setTurn(a) { this.av = a; }
   setThrust(t) { this.thrust = t; }
+  shoot() {
+    world.add(new Bullet(this.pos.add(p5.Vector.fromAngle(this.dir).mult(this.size)),this.vel,this.dir));
+  }
 
   onCollision(o) {
     if (o instanceof Roid) {
