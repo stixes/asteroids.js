@@ -1,8 +1,8 @@
 // TODO: (x=Done, /=in progress)
 // [x] Player Ship
-// [/] Asteroids
-// [ ] Bullets and impacts
-// [ ] Explosions
+// [x] Asteroids
+// [x] Bullets and impacts
+// [x] Explosions
 // [/] Scoreboard
 // [ ] Start screen / menu
 // [ ] Starry night backdrop
@@ -20,7 +20,14 @@ function setup() {
   startGame();
   world.add(ship);
   world.add(new Roid(createVector(random(width),random(height))));
-  world.add(new Roid(createVector(random(width),random(height))));
+}
+
+function nextLevel() {
+  score += 250*level;
+  level++;
+  for (var i=0;i<level;i++) {
+    world.add(new Roid(createVector(random(width),random(height))));
+  }
 }
 
 function startGame() {

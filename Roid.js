@@ -38,10 +38,11 @@ class Roid extends PhysObject {
   onCollision(o) {
     if (o instanceof Roid) {
       // reset to collision edge, wrt. obj sizes.
-      var overlap = p5.Vector.dist(this.pos,o.pos)-(this.size+o.size);
+      var overlap = this.size+o.size-p5.Vector.dist(this.pos,o.pos);
       var n = p5.Vector.sub(this.pos,o.pos).setMag(overlap);
       // this.pos.add(n.mult(this.size/(this.size+o.size)));
-      this.pos.sub(n);
+      this.pos.add(n);
+      o.pos.sub(n);
       // Bounce the balls
       var v2 = this.pos.copy().sub(o.pos).normalize(); // Impact normal
       // Deflect in direction of impact normal.
@@ -51,16 +52,18 @@ class Roid extends PhysObject {
     }
     if (o instanceof Bullet) {
       this.expire();
+      score+=40-this.size;
       if (this.size > 15) {
-        // world.add(new Roid(createVector(random(width),random(height)),this.size-10));
-        // world.add(new Roid(p5.Vector.random2D().mult(size).add(this.pos),this.size-10));
-        world.add(new Roid(this.pos.copy().add(p5.Vector.random2D().setMag(size*2)),this.size-10));
-        world.add(new Roid(this.pos.copy().add(p5.Vector.random2D().setMag(size*2)),this.size-10));
-        // world.add(new Roid(this.pos.copy().add(p5.Vector.random2D().setMag(size)),this.size-10));
-        // world.add(new Roid(p5.Vector.random2D().mult(size).add(this.pos),this.size-10));
-        // world.add(new Roid(p5.Vector.random2D().mult(size)),this.size-10));
-        // world.add(new Roid(p5.Vector.random2D().mult(size)),this.size-10));
+        var b = 3;
+        for (var i=0;i<b;i++){
+          world.add(new Roid(p5.Vector.fromAngle(map(i,0,b,0,TWO_PI)).setMag(this.size).add(this.pos),this.size-10));
+        }
       }
+      var rocks=0;
+      world.parts.forEach((o)=>{
+        rocks += (int)(o instanceof Roid);
+      });
+      if (rocks == 1) nextLevel();
     }
   }
 }
