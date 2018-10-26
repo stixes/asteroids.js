@@ -1,4 +1,16 @@
+var inputLockedTimeout=0;
+function lockInput(duration) {
+  inputLockedTimeout = millis() + duration;
+}
+
 function keyPressed() {
+  console.log(keyCode);
+  if (keyCode == 33) {
+    startGame();
+    score = 550;
+    gameOver();
+  }
+  if (inputLockedTimeout > millis()) return;
   if (menu) {
     startGame();
   } else {
@@ -19,6 +31,7 @@ function keyPressed() {
 }
 
 function keyReleased() {
+  if (inputLockedTimeout > millis()) return;
   if (!menu) {
     switch (keyCode) {
       case RIGHT_ARROW:

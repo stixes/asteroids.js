@@ -3,9 +3,12 @@
 // [x] Asteroids
 // [x] Bullets and impacts
 // [x] Explosions
-// [/] Scoreboard
-// [ ] Start screen / menu
+// [x] Scoreboard
+// [x] Start screen / menu
 // [x] Starry night backdrop
+// [ ] Better page layout
+// [x] Highscore list
+// [ ] Serverside highscore
 
 var ship;
 var world;
@@ -13,6 +16,9 @@ var bg;
 var level;
 var score;
 var menu = true;
+var menuTime = 0;
+var highscore = [[10000,"zap"],[9000,"zip"],[8000,"pif"],[7000,"nag"],[6000,"snu"],[4000,"exo"],[2000,"hck"],[1000,"ino"],[500,"ikr"],[100,"wtf"]]
+var initials = "AAA";
 
 function setup() {
   createCanvas(windowWidth,windowHeight);
@@ -22,24 +28,19 @@ function setup() {
   world = new Physics();
   startGame();
   startMenu();
+  lockInput(2000);
   world.add(ship);
   world.add(new Roid());
   world.add(new Roid());
   world.add(new Roid());
   world.add(new Roid());
+  initials = prompt("What is your initials?","AAA");
 }
 
 function startMenu() {
   ship.hide();
   menu = true;
-}
-
-function nextLevel() {
-  score += 250*level;
-  level++;
-  for (var i=0;i<level;i++) {
-    world.add(new Roid());
-  }
+  menuTime = millis();
 }
 
 function startGame() {
@@ -53,15 +54,55 @@ function startGame() {
   nextLevel();
 }
 
+function nextLevel() {
+  score += 250*level;
+  level++;
+  for (var i=0;i<level;i++) {
+    world.add(new Roid());
+  }
+}
+
+function gameOver() {
+  ship.die()
+  lockInput(2000);
+  updateHighscore();
+  startMenu();
+}
+
 function menuScreen() {
+  push();
+  translate(width/2,0);
   noStroke();
   fill(255);
   textFont("Arial");
-  textSize(height/8);
   textAlign(CENTER);
-  text("ASTEROIDS",width/2,height/2);
-  textSize(height/32);
-  text("Press SPACE to start",width/2,height/2+height/8);
+  if (millis() < menuTime + 2500) {
+    textSize(height/8);
+    text("ASTEROIDS",0,height/2);
+    textSize(height/32);
+    text("Press SPACE to start",0,height/2+height/8);
+  } else if (millis() < menuTime + 6000) {
+    textSize(height/16);
+    text("ASTEROIDS",0,height/8);
+    textSize(height/32);
+    for (var i=0;i<highscore.length;i++) {
+      var y=height/4 + i*(1.2*height/32);
+      textAlign(RIGHT);
+      text(highscore[i][0],-10,y);
+      textAlign(LEFT);
+      text(highscore[i][1],10,y);
+    }
+  } else { menuTime = millis(); }
+  pop();
+}
+
+function updateHighscore() {
+  var rank=99;
+  for (var i=highscore.length-1;i>=0;i--) {
+    if (highscore[i][0] < score) rank = i;
+  }
+  highscore.splice(rank,0,[score,initials]);
+  highscore.pop();
 }
 
 function scoreBoard() {
@@ -70,8 +111,9 @@ function scoreBoard() {
   textFont("Arial");
   textSize(height/32);
   textAlign(LEFT);
-  text("LEVEL: "+level,0,height/32);
-  text("SCORE: "+score,0,2*height/32);
+  text("PLAYER: "+initials,0,height/32);
+  text("LEVEL: "+level,0,2*height/32);
+  text("SCORE: "+score,0,3*height/32);
 }
 
 function draw() {

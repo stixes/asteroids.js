@@ -28,9 +28,9 @@ class Roid extends PhysObject {
     translate(this.pos.x,this.pos.y);
     rotate(this.dir);
     stroke(255);
-    beginShape();
-    noFill();
+    fill(0);
     stroke(255);
+    beginShape();
     this.roidShape.forEach((x)=>{
       vertex(x[0],x[1]);
     });

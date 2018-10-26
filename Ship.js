@@ -1,7 +1,7 @@
 class Ship extends PhysObject {
   constructor() {
     super();
-
+    this.size = 15;
     this.resetPos();
     this.hidden=false;
   }
@@ -15,15 +15,18 @@ class Ship extends PhysObject {
   }
 
   display() {
-    // console.log(this.hidden);
     if (this.hidden) return;
-    var s = 15;
+    push();
     stroke(255);
-    noFill();
-    push();s
+    fill(0);
     translate(this.pos.x,this.pos.y);
     rotate(this.dir);
-    triangle(-s,s,-s,-s,s,0);
+    beginShape();
+    vertex(this.size*1.5,0);
+    vertex(-this.size,-this.size);
+    vertex(0,0);
+    vertex(-this.size,this.size);
+    endShape(CLOSE);
     pop()
   }
 
@@ -37,7 +40,8 @@ class Ship extends PhysObject {
   setTurn(a) { this.av = a; }
   setThrust(t) { this.thrust = t; }
   shoot() {
-    world.add(new Bullet(this.pos.add(p5.Vector.fromAngle(this.dir).mult(this.size)),this.vel,this.dir));
+    var bulletPos = p5.Vector.fromAngle(this.dir).mult(this.size).add(this.pos);
+    world.add(new Bullet(bulletPos,this.vel,this.dir));
   }
 
   hide() { this.hidden=true; }
@@ -45,17 +49,14 @@ class Ship extends PhysObject {
 
   die() {
     this.hide();
+    explodeAt(this.pos.x,this.pos.y,this.size,8);
     this.resetPos();
-    for (var i=0;i<5;i++) {
-      world.add(new Explosion(p5.Vector.fromAngle(this.dir).mult(this.size).add(this.pos),random(10,180)));
-    }
-    startMenu();
   }
 
   onCollision(o) {
     if (!this.hidden) {
       if (o instanceof Roid) {
-        this.die()
+        gameOver();
       }
     }
   }
