@@ -12,6 +12,7 @@ var world;
 var bg;
 var level;
 var score;
+var menu = true;
 
 function setup() {
   createCanvas(windowWidth,windowHeight);
@@ -20,8 +21,17 @@ function setup() {
   ship = new Ship();
   world = new Physics();
   startGame();
+  startMenu();
   world.add(ship);
   world.add(new Roid());
+  world.add(new Roid());
+  world.add(new Roid());
+  world.add(new Roid());
+}
+
+function startMenu() {
+  ship.hide();
+  menu = true;
 }
 
 function nextLevel() {
@@ -33,13 +43,32 @@ function nextLevel() {
 }
 
 function startGame() {
-  level=1;
+  level=0;
   score=0;
+  menu=false;
+  ship.show();
+  ship.resetPos();
   world.reset();
+  world.add(ship);
+  nextLevel();
+}
+
+function menuScreen() {
+  noStroke();
+  fill(255);
+  textFont("Arial");
+  textSize(height/8);
+  textAlign(CENTER);
+  text("ASTEROIDS",width/2,height/2);
+  textSize(height/32);
+  text("Press SPACE to start",width/2,height/2+height/8);
 }
 
 function scoreBoard() {
-  // textFont(createFont("Arial",height/32,false));
+  noStroke();
+  fill(255);
+  textFont("Arial");
+  textSize(height/32);
   textAlign(LEFT);
   text("LEVEL: "+level,0,height/32);
   text("SCORE: "+score,0,2*height/32);
@@ -50,4 +79,5 @@ function draw() {
   world.update();
   world.display();
   scoreBoard();
+  if (menu) menuScreen();
 }

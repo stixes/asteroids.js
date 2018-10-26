@@ -2,13 +2,21 @@ class Ship extends PhysObject {
   constructor() {
     super();
 
+    this.resetPos();
+    this.hidden=false;
+  }
+
+  resetPos() {
     this.pos.x = width/2;this.pos.y=height/2;
+    this.vel.x = 0;this.vel.y=0;
     this.dir = -HALF_PI;
     this.av = 0;
     this.thrust=0;
   }
 
   display() {
+    // console.log(this.hidden);
+    if (this.hidden) return;
     var s = 15;
     stroke(255);
     noFill();
@@ -32,11 +40,24 @@ class Ship extends PhysObject {
     world.add(new Bullet(this.pos.add(p5.Vector.fromAngle(this.dir).mult(this.size)),this.vel,this.dir));
   }
 
-  onCollision(o) {
-    if (o instanceof Roid) {
-      console.log("Player hit by rock!");
-    }
+  hide() { this.hidden=true; }
+  show() { this.hidden=false; }
 
+  die() {
+    this.hide();
+    this.resetPos();
+    for (var i=0;i<5;i++) {
+      world.add(new Explosion(p5.Vector.fromAngle(this.dir).mult(this.size).add(this.pos),random(10,180)));
+    }
+    startMenu();
+  }
+
+  onCollision(o) {
+    if (!this.hidden) {
+      if (o instanceof Roid) {
+        this.die()
+      }
+    }
   }
 
 }
