@@ -1,7 +1,15 @@
 class Roid extends PhysObject {
   constructor(pos,size) {
     super();
-    this.pos=pos.copy();
+    if (pos) {
+      this.pos=pos.copy();
+    } else {
+      if (random(1)< 0.5) {
+        this.pos = createVector(0,random(height));
+      } else {
+        this.pos = createVector(random(height),0);
+      }
+    }
     this.vel=p5.Vector.fromAngle(random(TWO_PI)).mult(random(2,7));
     this.size=size?size:30;
     this.dir=0;

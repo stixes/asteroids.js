@@ -5,28 +5,30 @@
 // [x] Explosions
 // [/] Scoreboard
 // [ ] Start screen / menu
-// [ ] Starry night backdrop
+// [x] Starry night backdrop
 
 var ship;
 var world;
+var bg;
 var level;
 var score;
 
 function setup() {
   createCanvas(windowWidth,windowHeight);
   noSmooth();
+  bg = new Background();
   ship = new Ship();
   world = new Physics();
   startGame();
   world.add(ship);
-  world.add(new Roid(createVector(random(width),random(height))));
+  world.add(new Roid());
 }
 
 function nextLevel() {
   score += 250*level;
   level++;
   for (var i=0;i<level;i++) {
-    world.add(new Roid(createVector(random(width),random(height))));
+    world.add(new Roid());
   }
 }
 
@@ -44,7 +46,7 @@ function scoreBoard() {
 }
 
 function draw() {
-  background(0);
+  bg.display();
   world.update();
   world.display();
   scoreBoard();
