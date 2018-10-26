@@ -34,7 +34,10 @@ function setup() {
   world.add(new Roid());
   world.add(new Roid());
   world.add(new Roid());
-  initials = prompt("What is your initials?","AAA");
+  initials = "";
+  initials += random("ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(''));
+  initials += random("ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(''));
+  initials += random("ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(''));
 }
 
 function startMenu() {

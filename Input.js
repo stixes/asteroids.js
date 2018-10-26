@@ -3,13 +3,13 @@ function lockInput(duration) {
   inputLockedTimeout = millis() + duration;
 }
 
-function keyPressed() {
-  console.log(keyCode);
-  if (keyCode == 33) {
-    startGame();
-    score = 550;
-    gameOver();
+function mousePressed() {
+  if (mouseY < height/32 && mouseX<11*height/32) {
+    initials=prompt("Player initials ? (3 letter max)").substr(0,3).toUpperCase();
   }
+}
+
+function keyPressed() {
   if (inputLockedTimeout > millis()) return;
   if (menu) {
     startGame();

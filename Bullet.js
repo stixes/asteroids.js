@@ -9,7 +9,8 @@ class Bullet extends PhysObject {
   display() {
     var v = this.pos.copy().add(this.vel);
     stroke(255);
-    line(this.pos.x,this.pos.y,v.x,v.y);
+    // line(this.pos.x,this.pos.y,v.x,v.y);
+    ellipse(this.pos.x,this.pos.y,2,2);
     if (frameCount > this.life) this.expire();
   }
 
