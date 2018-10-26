@@ -1,4 +1,4 @@
-FROM node
+FROM node:alpine
 MAINTAINER Jesper Mathiassen <jesper.mathiassen@gmail.com>
 
 RUN npm install -g http-server
