@@ -1,9 +1,9 @@
 # Asteroids in a box!
 
-[![Docker Automated build](https://img.shields.io/docker/automated/stixes/docker-hook.svg)](https://hub.docker.com/r/stixes/asteroids.js/)
-[![Docker build status](https://img.shields.io/docker/build/stixes/docker-hook.svg)](https://hub.docker.com/r/stixes/asteroids.js/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/stixes/docker-hook.svg)](https://hub.docker.com/r/stixes/asteroids.js/)
-[![Docker stars](https://img.shields.io/docker/stars/stixes/docker-hook.svg)](https://hub.docker.com/r/stixes/asteroids.js)
+[![Docker Automated build](https://img.shields.io/docker/automated/stixes/asteroids.js.svg)](https://hub.docker.com/r/stixes/asteroids.js/)
+[![Docker build status](https://img.shields.io/docker/build/stixes/asteroids.js.svg)](https://hub.docker.com/r/stixes/asteroids.js/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/stixes/asteroids.js.svg)](https://hub.docker.com/r/stixes/asteroids.js/)
+[![Docker stars](https://img.shields.io/docker/stars/stixes/asteroids.js.svg)](https://hub.docker.com/r/stixes/asteroids.js)
 
 This is a Processing ([https://p5js.org/](https://p5js.org/)) project, implementing a fine little standalone version of the classic [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) game.
 
