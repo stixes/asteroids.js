@@ -8,7 +8,17 @@
 // [x] Starry night backdrop
 // [ ] Better page layout
 // [x] Highscore list
-// [/] Serverside highscore
+// [x] Serverside highscore
+// [ ] Blinking instructions on gamestart
+// [ ] Improve highscore tamper security
+// [ ] Score based on screen size (smaller screen = bonus)
+// [ ] Bullethell graphics
+//    [ ] Glowing particles
+//    [ ] Engine exhaust
+//    [ ] Impressive background
+//    [ ] Sprite graphics ?
+//    [ ] More explosions!
+
 
 function setup() {
   createCanvas(windowWidth,windowHeight);
