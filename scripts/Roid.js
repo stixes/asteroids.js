@@ -60,7 +60,7 @@ class Roid extends PhysObject {
     }
     if (o instanceof Bullet) {
       this.expire();
-      score+=40-this.size;
+      if (!ship.hidden) score+=40-this.size;
       if (this.size > 15) {
         var b = 3;
         for (var i=0;i<b;i++){

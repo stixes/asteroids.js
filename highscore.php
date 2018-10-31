@@ -37,7 +37,7 @@ function insertScore() {
   $hs = json_decode(fread($fd,filesize(DB_FILE)));
   // add score
   $hs[]=array(
-    $_POST['score'],
+    (int)$_POST['score'],
     $_POST['name']
   );
   // sort list
@@ -45,6 +45,7 @@ function insertScore() {
   // prune to 10 highest scores
   $hs = array_slice($hs,0,10);
   ftruncate($fd,0);
+  rewind($fd);
   fwrite($fd,json_encode($hs));
 }
 
@@ -52,7 +53,8 @@ function insertScore() {
 switch($_SERVER['REQUEST_METHOD']) {
   case 'GET': returnHighscore(); break;
   case 'POST': if (checkInput()) insertScore();
-               else die(json_encode(array("error"=>"Faulty input")));
+                else die(json_encode(array("error"=>"Faulty input","data"=>file_get_contents("php://input"))));
+               break;
   default: die(json_encode(array("error"=>"Unsupported method")));
 }
 

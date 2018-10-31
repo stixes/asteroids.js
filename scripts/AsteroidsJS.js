@@ -31,6 +31,7 @@ function setup() {
 function startMenu() {
   ship.hide();
   menu = true;
+  fetchHighscore();
   menuTime = millis();
 }
 
@@ -87,13 +88,22 @@ function menuScreen() {
   pop();
 }
 
+
+function fetchHighscore() {
+  var request = new XMLHttpRequest();
+  request.open('GET', hs_endpoint, true);
+  request.onload = function() { highscore = JSON.parse(this.response); }
+  request.send();
+}
+
 function updateHighscore() {
-  var rank=99;
-  for (var i=highscore.length-1;i>=0;i--) {
-    if (highscore[i][0] < score) rank = i;
-  }
-  highscore.splice(rank,0,[score,initials]);
-  highscore.pop();
+  var request = new XMLHttpRequest();
+  request.open('POST',hs_endpoint,true);
+  var params='name='+initials+'&score='+score;
+  request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  request.onload = function() { console.log(this.response); }
+  request.send(params);
+  fetchHighscore();
 }
 
 function scoreBoard() {
