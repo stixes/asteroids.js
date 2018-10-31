@@ -91,14 +91,14 @@ function menuScreen() {
 
 function fetchHighscore() {
   var request = new XMLHttpRequest();
-  request.open('GET', hs_endpoint, true);
+  request.open('GET', hs_endpoint+"/highscore.php", true);
   request.onload = function() { highscore = JSON.parse(this.response); }
   request.send();
 }
 
 function updateHighscore() {
   var request = new XMLHttpRequest();
-  request.open('POST',hs_endpoint,true);
+  request.open('POST',hs_endpoint+"/highscore.php",true);
   var params='name='+initials+'&score='+score;
   request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
   request.onload = function() { console.log(this.response); }
