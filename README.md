@@ -15,7 +15,7 @@ OR
 
 Run using the docker image:
 
-    docker run -d -p 8080:8080 stixes/asteroids
+    docker run -d -p 8080:80 stixes/asteroids
 
 and access it through your browser on http://localhost:8080. (Localhost may be another host/ip, depending on your setup).
 

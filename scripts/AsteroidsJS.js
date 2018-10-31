@@ -8,7 +8,7 @@
 // [x] Starry night backdrop
 // [ ] Better page layout
 // [x] Highscore list
-// [ ] Serverside highscore
+// [/] Serverside highscore
 
 function setup() {
   createCanvas(windowWidth,windowHeight);

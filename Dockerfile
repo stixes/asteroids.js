@@ -1,11 +1,11 @@
-FROM node:alpine
+FROM php:7-alpine
 MAINTAINER Jesper Mathiassen <jesper.mathiassen@gmail.com>
 
-RUN npm install -g http-server
-EXPOSE 8080
+COPY highscore.db /srv/data/
+COPY scripts/* /srv/scripts/
+COPY highscore.php index.html robots.txt /srv/
 
-COPY index.html /srv/public/
-COPY scripts/*.js /srv/public/scripts/
+VOLUME /srv/data
+EXPOSE 80
 
-USER nobody
-CMD ["/usr/local/bin/http-server","/srv/public","-r"]
+CMD ["php","-S","0.0.0.0:80","-t","/srv"]

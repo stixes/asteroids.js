@@ -10,10 +10,10 @@ test:
 	docker run --rm ${IMAGE_NAME} ls -lR /srv
 
 run: build
-	winpty docker run --rm -it -p 8080:8080 --name ast-dev ${IMAGE_NAME}
+	winpty docker run --rm -it -p 8080:80 --name ast-dev ${IMAGE_NAME}
 
 start: build test
-	docker run --rm -d -p 8080:8080 --name ast-dev ${IMAGE_NAME}
+	docker run --rm -d -p 8080:80 --name ast-dev ${IMAGE_NAME}
 
 logs:
 	docker logs -f ast-dev
@@ -21,7 +21,7 @@ logs:
 stop:
 	docker kill ast-dev
 
-npm:
-	docker run --rm -v /c/projects/AsteroidsJS:/work -w /work node pwd
+shell:
+	winpty docker run --rm -it ${IMAGE_NAME} /bin/sh
 
-.PHONY: all build test start stop run logs npm
+.PHONY: all build test start stop run logs shell
