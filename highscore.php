@@ -4,6 +4,7 @@
 */
 define('DB_FILE',"/srv/data/highscore.db");
 
+header('Content-Type: application/json');
 
 # Open and lock file
 global $fd;
