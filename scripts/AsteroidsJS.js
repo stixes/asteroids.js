@@ -24,12 +24,14 @@ function setup() {
   createCanvas(windowWidth,windowHeight);
   noSmooth();
   bg = new Background();
+  highscore = new Highscore(hs_endpoint);
   ship = new Ship();
   world = new Physics();
   startGame();
   startMenu();
   lockInput(2000);
   world.add(ship);
+
   world.add(new Roid());
   world.add(new Roid());
   world.add(new Roid());
@@ -41,7 +43,7 @@ function setup() {
 function startMenu() {
   ship.hide();
   menu = true;
-  fetchHighscore();
+  highscore.refresh();
   menuTime = millis();
 }
 
@@ -67,7 +69,7 @@ function nextLevel() {
 function gameOver() {
   ship.die()
   lockInput(2000);
-  updateHighscore();
+  highscore.update();
   startMenu();
 }
 
@@ -84,36 +86,9 @@ function menuScreen() {
     textSize(height/32);
     text("Press SPACE to start",0,height/2+height/8);
   } else if (millis() < menuTime + 6000) {
-    textSize(height/16);
-    text("ASTEROIDS",0,height/8);
-    textSize(height/32);
-    for (var i=0;i<highscore.length;i++) {
-      var y=height/4 + i*(1.2*height/32);
-      textAlign(RIGHT);
-      text(highscore[i][0],-10,y);
-      textAlign(LEFT);
-      text(highscore[i][1],10,y);
-    }
+    highscore.show();
   } else { menuTime = millis(); }
   pop();
-}
-
-
-function fetchHighscore() {
-  var request = new XMLHttpRequest();
-  request.open('GET', hs_endpoint+"/highscore.php", true);
-  request.onload = function() { highscore = JSON.parse(this.response); }
-  request.send();
-}
-
-function updateHighscore() {
-  var request = new XMLHttpRequest();
-  request.open('POST',hs_endpoint+"/highscore.php",true);
-  var params='name='+initials+'&score='+score;
-  request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-  request.onload = function() { console.log(this.response); }
-  request.send(params);
-  fetchHighscore();
 }
 
 function scoreBoard() {
