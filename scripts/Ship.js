@@ -63,6 +63,38 @@ class Ship extends PhysObject {
     this.resetPos();
   }
 
+  onKeyPressed() {
+    if (!menu) {
+      if (key == ' ') {
+        this.shoot();
+      } else switch (keyCode) {
+        case RIGHT_ARROW:
+          this.setTurn(0.1);
+          break;
+        case LEFT_ARROW:
+          this.setTurn(-0.1);
+          break;
+        case UP_ARROW:
+          this.setThrust(0.3);
+          break;
+      }
+    }
+  }
+
+  onKeyReleased() {
+    if (!menu) {
+      switch (keyCode) {
+        case RIGHT_ARROW:
+        case LEFT_ARROW:
+          this.setTurn(0);
+          break;
+        case UP_ARROW:
+          this.setThrust(0);
+          break;
+      }
+    }
+  }
+
   onCollision(o) {
     if (this.state==ShipStates.DEAD) return;
     if (o instanceof Roid) {

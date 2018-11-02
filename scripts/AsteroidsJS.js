@@ -27,7 +27,6 @@ function setup() {
   highscore = new Highscore(hs_endpoint);
   ship = new Ship();
   world = new Physics();
-  startGame();
   startMenu();
   lockInput(2000);
   world.add(ship);

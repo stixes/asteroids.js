@@ -24,6 +24,20 @@ class Physics {
   reset() { this.parts = [] }
   display() { this.parts.forEach((p) => { p.display(); })}
 
+  handleKeyPressed() {
+    for (var i=0;i<this.parts.length-1;i++) {
+      if (typeof this.parts[i].onKeyPressed === 'function')
+        this.parts[i].onKeyPressed();
+    }
+  }
+
+  handleKeyReleased() {
+    for (var i=0;i<this.parts.length-1;i++) {
+      if (typeof this.parts[i].onKeyReleased === 'function')
+        this.parts[i].onKeyReleased();
+    }
+  }
+
   updateAllParts() {
     this.parts.forEach((p) => { p.update(); })
   }
