@@ -3,7 +3,7 @@ var ShipStates = { ALIVE: 1, DEAD: 2}
 class Ship extends PhysObject {
   constructor() {
     super();
-    this.state = ShipStates.ALIVE;
+    this.state = ShipStates.DEAD;
     this.size = 15;
     this.resetPos();
   }
