@@ -41,7 +41,7 @@ function setup() {
 }
 
 function startMenu() {
-  ship.hide();
+  ship.die();
   menu = true;
   highscore.refresh();
   menuTime = millis();
@@ -51,7 +51,7 @@ function startGame() {
   level=0;
   score=0;
   menu=false;
-  ship.show();
+  ship.spawn();
   ship.resetPos();
   world.reset();
   world.add(ship);
@@ -67,7 +67,6 @@ function nextLevel() {
 }
 
 function gameOver() {
-  ship.die()
   lockInput(2000);
   highscore.update();
   startMenu();

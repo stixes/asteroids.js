@@ -1,9 +1,11 @@
+var ShipStates = { ALIVE: 1, DEAD: 2}
+
 class Ship extends PhysObject {
   constructor() {
     super();
+    this.state = ShipStates.ALIVE;
     this.size = 15;
     this.resetPos();
-    this.hidden=false;
   }
 
   resetPos() {
@@ -15,7 +17,7 @@ class Ship extends PhysObject {
   }
 
   display() {
-    if (this.hidden) return;
+    if (this.state==ShipStates.DEAD) return;
     push();
     stroke(255);
     fill(0);
@@ -40,24 +42,31 @@ class Ship extends PhysObject {
   setTurn(a) { this.av = a; }
   setThrust(t) { this.thrust = t; }
   shoot() {
+    if (this.state==ShipStates.DEAD) return;
     var bulletPos = p5.Vector.fromAngle(this.dir).mult(this.size).add(this.pos);
     world.add(new Bullet(bulletPos,this.vel,this.dir));
   }
 
-  hide() { this.hidden=true; }
-  show() { this.hidden=false; }
+  hit() {
+    explodeAt(this.pos.x,this.pos.y,this.size,8);
+    this.die();
+    gameOver();
+  }
 
   die() {
-    this.hide();
-    explodeAt(this.pos.x,this.pos.y,this.size,8);
+    this.state=ShipStates.DEAD;
+    this.resetPos();
+  }
+
+  spawn() {
+    this.state=ShipStates.ALIVE;
     this.resetPos();
   }
 
   onCollision(o) {
-    if (!this.hidden) {
-      if (o instanceof Roid) {
-        gameOver();
-      }
+    if (this.state==ShipStates.DEAD) return;
+    if (o instanceof Roid) {
+      this.hit();
     }
   }
 
